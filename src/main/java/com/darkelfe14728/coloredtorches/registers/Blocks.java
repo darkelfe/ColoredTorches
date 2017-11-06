@@ -5,40 +5,57 @@ import com.darkelfe14728.coloredtorches.torch.TorchItem;
 import com.darkelfe14728.coloredtorches.torch.TorchTileEntity;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Blocks registry.
  * 
  * @author Julien Rosset
  */
+@Mod.EventBusSubscriber
+@ObjectHolder("coloredtorches")
 public class Blocks
 {
-	public static TorchBlock torch;
+	@ObjectHolder("torch")
+	public static final TorchBlock torch = null;
 	
-	public static void init()
+	@SubscribeEvent
+	public static void registerBlocks(RegistryEvent.Register<Block> event)
 	{
-		torch = new TorchBlock();
-		register(torch, new TorchItem(torch), TorchTileEntity.class);
+		registerBlockAndTE(event, new TorchBlock(), TorchTileEntity.class);
+	}
+	@SubscribeEvent
+	public static void registerItems(RegistryEvent.Register<Item> event)
+	{
+		registerItemBlock(event, new TorchItem(torch));
 	}
 	
-	private static <T extends Block> T register(T block, ItemBlock itemBlock) {
-		//GameRegistry.register(block);
-		//GameRegistry.register(itemBlock);
-
-		return block;
+	private static void registerBlock(RegistryEvent.Register<Block> event, Block block)
+	{
+		event.getRegistry().register(block);
 	}
-	private static <T extends Block> T register(T block) {
-		ItemBlock itemBlock = new ItemBlock(block);
-		itemBlock.setRegistryName(block.getRegistryName());
-		return register(block, itemBlock);
+	private static void registerBlockAndTE(RegistryEvent.Register<Block> event, Block block, Class<? extends TileEntity> te)
+	{
+		registerBlock(event, block);
+		GameRegistry.registerTileEntity(te, block.getRegistryName().toString());
 	}
-	private static <T extends Block> T register(T block, ItemBlock itemBlock, Class<? extends TileEntity> tileEntity) {
-		T ret = register(block, itemBlock);
-		GameRegistry.registerTileEntity(tileEntity, block.getRegistryName().toString());
 
-		return ret;
+	private static void registerItemBlock(RegistryEvent.Register<Item> event, ItemBlock item)
+	{
+		event.getRegistry().register(item);
+	}
+	@SideOnly(Side.CLIENT)
+	public static void registerModels()
+	{
+		torch.registerModels();
 	}
 }

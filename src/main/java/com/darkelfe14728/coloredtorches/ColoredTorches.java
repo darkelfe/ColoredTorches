@@ -3,8 +3,6 @@ package com.darkelfe14728.coloredtorches;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 import com.darkelfe14728.coloredtorches.log.LogHelper;
 import com.darkelfe14728.coloredtorches.proxy.CommonProxy;
-import com.darkelfe14728.coloredtorches.registers.Blocks;
-import com.darkelfe14728.coloredtorches.registers.Items;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -48,8 +46,8 @@ public class ColoredTorches
 	 * Current proxy.
 	 */
 	@SidedProxy(
-		clientSide = "coloredtorches.proxy.ClientProxy",
-		serverSide = "coloredtorches.proxy.CommonProxy"
+		clientSide = "com.darkelfe14728.coloredtorches.proxy.ClientProxy",
+		serverSide = "com.darkelfe14728.coloredtorches.proxy.CommonProxy"
 	)
 	public static CommonProxy proxy;
 		
@@ -67,9 +65,6 @@ public class ColoredTorches
 		LogHelper.info("Loading configuration");
     	ModConfig.load(event.getSuggestedConfigurationFile());
 		LogHelper.info("Configuration OK");
-    	
-    	Items.init();
-    	Blocks.init();
 	}
 	/**
 	 * At initialization.
@@ -86,7 +81,5 @@ public class ColoredTorches
 	 */
 	@Mod.EventHandler
 	public void postInit (FMLPostInitializationEvent event)
-	{
-		
-	}
+	{}
 }
