@@ -1,0 +1,18 @@
+interface.color=Color : %s
+
+colors.color.0=Black
+colors.color.1=Red
+colors.color.2=Green
+colors.color.3=Brown
+colors.color.4=Blue
+colors.color.5=Purple
+colors.color.6=Cyan
+colors.color.7=Light gray
+colors.color.8=Gray
+colors.color.9=Pink
+colors.color.10=Lime
+colors.color.11=Yellow
+colors.color.12=Light blue
+colors.color.13=Magenta
+colors.color.14=Orange
+colors.color.15=White
