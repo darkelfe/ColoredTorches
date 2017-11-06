@@ -12,6 +12,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -58,6 +59,12 @@ public class TorchBlock
 				.withProperty(FACING, EnumFacing.UP)
 				.withProperty(COLOR, 0)
 		);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void registerModels()
+	{
+		((TorchItem)Item.getItemFromBlock(this)).registerModels();
 	}
 	
 	@Override
