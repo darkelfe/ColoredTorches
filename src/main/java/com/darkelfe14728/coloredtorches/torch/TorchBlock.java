@@ -4,10 +4,12 @@ import java.util.Random;
 
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 import com.darkelfe14728.coloredtorches.log.LogHelper;
+import com.darkelfe14728.coloredtorches.utils.PropertyColor;
 
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -40,10 +42,10 @@ public class TorchBlock
 	 * 
 	 * <b>WARNING :</b> this is NOT only vanilla colors (like dye).
 	 */
-	public static final PropertyInteger COLOR = PropertyInteger.create("color", ModConfig.instance.colors.colors_min, ModConfig.instance.colors.colors_max);
+	public static final PropertyColor COLOR = new PropertyColor("color");
 	
 	public TorchBlock()
-	{
+	{		
 		super();
 		setHardness(0.0F);
 		setLightLevel(0.9375F);
@@ -57,7 +59,7 @@ public class TorchBlock
 		// State
 		setDefaultState(this.blockState.getBaseState()
 				.withProperty(FACING, EnumFacing.UP)
-				.withProperty(COLOR, 0)
+				.withProperty(COLOR, ModConfig.instance.colors.colors.keySet().iterator().next())	// First color
 		);
 	}
 	
@@ -109,22 +111,14 @@ public class TorchBlock
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)	// getExtendedState ?
 	{
-		LogHelper.info("Get actual state at " + pos.toString() + " on " + LogHelper.side() + " side");
-		LogHelper.startIndent();
-		
-		int colorProperty = 0;
+		String colorProperty = null;
 		
 		TileEntity te = worldIn instanceof ChunkCache ? ((ChunkCache)worldIn).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : worldIn.getTileEntity(pos);
 		if(te instanceof TorchTileEntity)
 		{
-			LogHelper.info("TileEntity OK");
-			TorchTileEntity tile = (TorchTileEntity)te;
-			
+			TorchTileEntity tile = (TorchTileEntity)te;			
 			colorProperty = tile.getColorID();
-			LogHelper.info("ColorID = " + colorProperty);
 		}
-		else
-			LogHelper.info("TileEntity KO");
 		
 		LogHelper.stopIndent();
 		return state.withProperty(COLOR, colorProperty);
@@ -133,13 +127,13 @@ public class TorchBlock
 	@Override
 	public int damageDropped(IBlockState state)
 	{
-		return state.getValue(COLOR);
+		return ModConfig.instance.colors.colors.get(state.getValue(COLOR)).getMetadata();
 	}
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state,	EntityLivingBase placer, ItemStack stack)
 	{
 		TileEntity te = worldIn.getTileEntity(pos);
 		if(te instanceof TorchTileEntity)
-			((TorchTileEntity)te).setColorID(stack.getItemDamage());
+			((TorchTileEntity)te).setColor(ModConfig.instance.colors.colorsMeta.get(stack.getItemDamage()));
 	}
 }

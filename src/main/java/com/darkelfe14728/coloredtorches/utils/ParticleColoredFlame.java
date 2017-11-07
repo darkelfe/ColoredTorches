@@ -1,9 +1,13 @@
-package com.darkelfe14728.coloredtorches;
+package com.darkelfe14728.coloredtorches.utils;
 
 import java.awt.Color;
 
+import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFlame;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Particles for colored flame.
@@ -35,4 +39,13 @@ public class ParticleColoredFlame
 		this.particleGreen = (float)color.getGreen() / 255;
 		this.particleBlue  = (float)color.getBlue()  / 255; 
 	}
+	
+    /*@SideOnly(Side.CLIENT)
+    public static class Factory implements IParticleFactory
+    {
+        public Particle createParticle(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... extraArgs)
+        {
+            return new ParticleColoredFlame(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
+        }
+    }*/
 }

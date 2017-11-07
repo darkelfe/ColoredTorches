@@ -12,29 +12,46 @@ import net.minecraft.item.ItemStack;
  */
 public class ColorsObjectCategory 
 	implements ICategory 
-{
-	public static final String NAME_PREFIX = "color_";
-	
-	public int id = -1;
-	public Range craftBy = null;
-	public ItemStack craftingItem = null;
+{	
+	protected String id = null;
+	protected int metadata = -1;
+	protected Range craftBy = null;
+	protected ItemStack craftingItem = null;
 
-	public ColorsObjectCategory(int ID)
+	public ColorsObjectCategory(String id, int metadata)
 	{
-		this.id = ID;
+		this.id = id;
+		this.metadata = metadata;
 	}
-	public ColorsObjectCategory(int ID, ItemStack craftingItem)
+	public ColorsObjectCategory(String id, int metadata, ItemStack craftingItem)
 	{
-		this(ID);
+		this(id, metadata);
 		this.craftingItem = craftingItem;
 	}
 	
 	@Override
 	public String getName()
 	{
-		return NAME_PREFIX + this.id;
+		return this.id;
 	}
 
+	public String getId()
+	{
+		return this.id;
+	}
+	public int getMetadata()
+	{
+		return this.metadata;
+	}
+	public Range getCraftBy()
+	{
+		return this.craftBy;
+	}
+	public ItemStack getCraftingItem()
+	{
+		return this.craftingItem;
+	}
+	
 	@Override
 	public void load(ImprovedConfiguration config)
 	{

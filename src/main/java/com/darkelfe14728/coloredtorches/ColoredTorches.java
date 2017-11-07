@@ -4,6 +4,7 @@ import com.darkelfe14728.coloredtorches.config.ModConfig;
 import com.darkelfe14728.coloredtorches.log.LogHelper;
 import com.darkelfe14728.coloredtorches.proxy.CommonProxy;
 
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -61,7 +62,6 @@ public class ColoredTorches
 	{
 		LogHelper.info("Hello !");
     	
-
 		LogHelper.info("Loading configuration");
     	ModConfig.load(event.getSuggestedConfigurationFile());
 		LogHelper.info("Configuration OK");
