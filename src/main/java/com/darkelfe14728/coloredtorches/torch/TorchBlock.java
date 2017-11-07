@@ -10,8 +10,6 @@ import com.darkelfe14728.coloredtorches.utils.PropertyColor;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;

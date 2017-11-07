@@ -7,14 +7,10 @@ import javax.annotation.Nullable;
 
 import com.darkelfe14728.coloredtorches.config.ColorsObjectCategory;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
-import com.darkelfe14728.coloredtorches.log.LogHelper;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 /**
  * The colored torch block's attach informations.
