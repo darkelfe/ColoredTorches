@@ -46,7 +46,7 @@ public class ParticleColoredFlame
 	)
 	{
 		super(world, x, y, z, velX,	velY, velZ);
-		setParticleTexture(textures.get(colorMetadata)); 
+		setParticleTexture(textures.get(colorMetadata));
 	}
 
 	public static void registerSprite(TextureMap map)
@@ -56,7 +56,7 @@ public class ParticleColoredFlame
 			textures.put(
 				color.getValue().getMetadata(), 
 				map.registerSprite(
-					new ResourceLocation("coloredtorches:particle/torch_" + color.getKey())
+					new ResourceLocation("coloredtorches:particle/torch_flame_" + color.getKey())
 				)
 			);
 		}

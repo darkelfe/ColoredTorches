@@ -21,6 +21,7 @@ public class Items
 		
 	}
 
+	@SuppressWarnings("unused")
 	private static void registerItem(RegistryEvent.Register<Item> event, Item item)
 	{
 		event.getRegistry().register(item);
