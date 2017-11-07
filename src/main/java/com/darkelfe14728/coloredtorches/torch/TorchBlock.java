@@ -2,6 +2,7 @@ package com.darkelfe14728.coloredtorches.torch;
 
 import java.util.Random;
 
+import com.darkelfe14728.coloredtorches.config.ColorsObjectCategory;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 import com.darkelfe14728.coloredtorches.log.LogHelper;
 import com.darkelfe14728.coloredtorches.registers.Particles;
@@ -12,12 +13,14 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
@@ -79,6 +82,28 @@ public class TorchBlock
 		return new TorchTileEntity();
 	}
 	
+	private TorchTileEntity getTileEntity(World world, BlockPos pos)
+	{
+		return (TorchTileEntity)world.getTileEntity(pos);	
+	}
+	private TorchTileEntity getTileEntity(IBlockAccess world, BlockPos pos)
+	{
+		TileEntity te = world instanceof ChunkCache ? ((ChunkCache)world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : world.getTileEntity(pos);
+		if(te instanceof TorchTileEntity)
+			return (TorchTileEntity)te;
+		
+		return null;
+	}
+	
+	private ColorsObjectCategory getColor(World world, BlockPos pos)
+	{
+		return getTileEntity(world, pos).getColor();
+	}
+	private ColorsObjectCategory getColor(IBlockAccess world, BlockPos pos)
+	{
+		return getTileEntity(world, pos).getColor();
+	}
+	
 	@Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
@@ -87,9 +112,8 @@ public class TorchBlock
         double xCoord = (double)pos.getX() + 0.5D;
         double yCoord = (double)pos.getY() + 0.7D;
         double zCoord = (double)pos.getZ() + 0.5D;
-        
-        String color = state.getValue(COLOR);
-        int metadata = ModConfig.instance.colors.colors.get(color).getMetadata();
+					
+		int metadata = this.getColor(world, pos).getMetadata();
         
         int[] args = {metadata};
 
@@ -142,11 +166,11 @@ public class TorchBlock
 		return new BlockStateContainer(this, new IProperty[] {FACING, COLOR});
 	}
 	@Override
-	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)	// getExtendedState ?
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)	// getExtendedState ?
 	{
 		String colorProperty = null;
 		
-		TileEntity te = worldIn instanceof ChunkCache ? ((ChunkCache)worldIn).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : worldIn.getTileEntity(pos);
+		TileEntity te = world instanceof ChunkCache ? ((ChunkCache)world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : world.getTileEntity(pos);
 		if(te instanceof TorchTileEntity)
 		{
 			TorchTileEntity tile = (TorchTileEntity)te;			
@@ -162,6 +186,15 @@ public class TorchBlock
 	{
 		return ModConfig.instance.colors.colors.get(state.getValue(COLOR)).getMetadata();
 	}
+	
+	@Override
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
+	{
+		Minecraft.getMinecraft().setIngameNotInFocus();
+		int metadata = this.getColor(world, pos).getMetadata();		
+		drops.add(new ItemStack(this, 1, metadata));
+	}
+	
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state,	EntityLivingBase placer, ItemStack stack)
 	{

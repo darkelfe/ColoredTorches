@@ -9,8 +9,22 @@
     		"north": { "model": "normal_torch_wall", "y": 270 }
     	},
     	"color": {
-    		"black": {  },
-    		"red":   { "textures": { "torch": "coloredtorches:blocks/torch_red" } }
+    		"white":     { "textures": { "torch": "coloredtorches:blocks/torch_white"     } },
+    		"orange":    { "textures": { "torch": "coloredtorches:blocks/torch_orange"    } },
+    		"magenta":   { "textures": { "torch": "coloredtorches:blocks/torch_magenta"   } },
+    		"lightblue": { "textures": { "torch": "coloredtorches:blocks/torch_lightblue" } },
+    		"yellow":    { "textures": { "torch": "coloredtorches:blocks/torch_yellow"    } },
+    		"lime":      { "textures": { "torch": "coloredtorches:blocks/torch_lime"      } },
+    		"pink":      { "textures": { "torch": "coloredtorches:blocks/torch_pink"      } },
+    		"gray":      { "textures": { "torch": "coloredtorches:blocks/torch_gray"      } },
+    		"silver":    { "textures": { "torch": "coloredtorches:blocks/torch_silver"    } },
+    		"cyan":      { "textures": { "torch": "coloredtorches:blocks/torch_cyan"      } },
+    		"purple":    { "textures": { "torch": "coloredtorches:blocks/torch_purple"    } },
+    		"blue":      { "textures": { "torch": "coloredtorches:blocks/torch_blue"      } },
+    		"brown":     { "textures": { "torch": "coloredtorches:blocks/torch_brown"     } },
+    		"green":     { "textures": { "torch": "coloredtorches:blocks/torch_green"     } },
+    		"red":       { "textures": { "torch": "coloredtorches:blocks/torch_red"       } },
+    		"black":     { "textures": { "torch": "coloredtorches:blocks/torch_black"     } }
     	}
     }
 }

@@ -49,8 +49,8 @@ public class TorchItem
         if(!this.isInCreativeTab(tab))
         	return;
         
-    	for(Integer metadata : ModConfig.instance.colors.colorsMeta.keySet())
-    		items.add(new ItemStack(this, 1, metadata));
+        for(Map.Entry<String, ColorsObjectCategory> color : ModConfig.instance.colors.colors.entrySet())
+    		items.add(new ItemStack(this, 1, color.getValue().getMetadata()));
     }
 	@SideOnly(Side.CLIENT)
 	public void registerModels()
