@@ -7,4 +7,5 @@ package com.darkelfe14728.coloredtorches.proxy;
  */
 public class CommonProxy
 {
+	public void registerParticles() {}
 }
