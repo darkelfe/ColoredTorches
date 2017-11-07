@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 import com.darkelfe14728.coloredtorches.log.LogHelper;
+import com.darkelfe14728.coloredtorches.registers.Particles;
 import com.darkelfe14728.coloredtorches.utils.PropertyColor;
 
 import net.minecraft.block.BlockTorch;
@@ -82,25 +83,59 @@ public class TorchBlock
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
     {
-        EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
-        double d0 = (double)pos.getX() + 0.5D;
-        double d1 = (double)pos.getY() + 0.7D;
-        double d2 = (double)pos.getZ() + 0.5D;
-        double d3 = 0.22D;
-        double d4 = 0.27D;
+        EnumFacing face = (EnumFacing)state.getValue(FACING);
+        double xCoord = (double)pos.getX() + 0.5D;
+        double yCoord = (double)pos.getY() + 0.7D;
+        double zCoord = (double)pos.getZ() + 0.5D;
+        
+        String color = state.getValue(COLOR);
+        int metadata = ModConfig.instance.colors.colors.get(color).getMetadata();
+        
+        int[] args = {metadata};
 
-        if (enumfacing.getAxis().isHorizontal())
+        if (face.getAxis().isHorizontal())
         {
-            EnumFacing enumfacing1 = enumfacing.getOpposite();
-            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double)enumfacing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double)enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
-            worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4 * (double)enumfacing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double)enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+            face = face.getOpposite();
+            double vOffset = 0.22D;
+            double hOffset = 0.27D;
+            
+            world.spawnParticle(
+        		EnumParticleTypes.SMOKE_NORMAL, 
+        		xCoord + hOffset * (double)face.getFrontOffsetX(), 
+        		yCoord + vOffset, 
+        		zCoord + hOffset * (double)face.getFrontOffsetZ(), 
+        		0.0D, 0.0D, 0.0D, 
+        		new int[0]
+            );
+            world.spawnParticle(
+        		Particles.COLORED_FLAME, 
+        		xCoord + hOffset * (double)face.getFrontOffsetX(), 
+        		yCoord + vOffset, 
+        		zCoord + hOffset * (double)face.getFrontOffsetZ(), 
+        		0.0D, 0.0D, 0.0D, 
+        		args
+        	);
         }
         else
         {
-            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
-            worldIn.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+        	world.spawnParticle(
+        		EnumParticleTypes.SMOKE_NORMAL, 
+        		xCoord, 
+        		yCoord, 
+        		zCoord, 
+        		0.0D, 0.0D, 0.0D, 
+        		new int[0]
+            );
+            world.spawnParticle(
+        		Particles.COLORED_FLAME, 
+        		xCoord, 
+        		yCoord, 
+        		zCoord, 
+        		0.0D, 0.0D, 0.0D, 
+        		args
+        	);
         }
     }
 	
