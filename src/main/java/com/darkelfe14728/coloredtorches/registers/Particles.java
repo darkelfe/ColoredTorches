@@ -6,6 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Registry about new particles.
@@ -19,6 +21,7 @@ public class Particles
 	
 	public static EnumParticleTypes COLORED_FLAME;
 	
+	@SideOnly(Side.CLIENT)
 	public static void registerParticles()
 	{
 		COLORED_FLAME = registerParticle("COLORED_FLAME", "coloredFlame", new ParticleColoredFlame.Factory());

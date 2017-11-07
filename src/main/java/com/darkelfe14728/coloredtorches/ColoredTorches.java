@@ -3,7 +3,6 @@ package com.darkelfe14728.coloredtorches;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 import com.darkelfe14728.coloredtorches.log.LogHelper;
 import com.darkelfe14728.coloredtorches.proxy.CommonProxy;
-import com.darkelfe14728.coloredtorches.registers.Particles;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -75,7 +74,7 @@ public class ColoredTorches
 	public void init     (FMLInitializationEvent     event)
 	{
 		LogHelper.info("Register new particles");
-		Particles.registerParticles();
+		proxy.registerParticles();
 	}
 	/**
 	 * At post-initialization.
