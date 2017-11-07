@@ -47,15 +47,15 @@ public class TorchItem
         if(!this.isInCreativeTab(tab))
         	return;
         
-    	for(Integer colorID : ModConfig.instance.colors.colors.keySet())
-    		items.add(new ItemStack(this, 1, colorID));
+    	for(Integer metadata : ModConfig.instance.colors.colorsMeta.keySet())
+    		items.add(new ItemStack(this, 1, metadata));
     }
 	@SideOnly(Side.CLIENT)
 	public void registerModels()
 	{
 		ModelResourceLocation loc = new ModelResourceLocation(this.getRegistryName(), "inventory");
-		for(Integer colorID : ModConfig.instance.colors.colors.keySet())
-			ModelLoader.setCustomModelResourceLocation(this, colorID, loc);
+		for(Integer metadata : ModConfig.instance.colors.colorsMeta.keySet())
+			ModelLoader.setCustomModelResourceLocation(this, metadata, loc);
 	}
 	
 	@Override
@@ -67,7 +67,7 @@ public class TorchItem
 	@Override
 	public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName() + "." + stack.getMetadata();
+        return super.getUnlocalizedName() + "." + ModConfig.instance.colors.colorsMeta.get(stack.getMetadata()).getId();
     }
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -75,7 +75,7 @@ public class TorchItem
     {
         super.addInformation(stack, world, tooltip, flag);
         
-        String color_str = I18n.format("colors.color." + stack.getItemDamage());
+        String color_str = I18n.format("colors.color." + ModConfig.instance.colors.colorsMeta.get(stack.getMetadata()).getId());
         tooltip.add(I18n.format("interface.color", color_str));
     }
 }

@@ -9,8 +9,8 @@
     		"north": { "model": "normal_torch_wall", "y": 270 }
     	},
     	"color": {
-    		"0": {  },
-    		"1": { "textures": { "torch": "coloredtorches:blocks/torch_red" } }
+    		"black": {  },
+    		"red":   { "textures": { "torch": "coloredtorches:blocks/torch_red" } }
     	}
     }
 }

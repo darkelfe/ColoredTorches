@@ -17,8 +17,8 @@ import net.minecraft.item.ItemStack;
 public class ColorsCategory
 	implements ICategory 
 {
-	public Map<Integer, ColorsObjectCategory> colors = new HashMap<Integer, ColorsObjectCategory>();
-	public int colors_min, colors_max;
+	public Map<String , ColorsObjectCategory> colors     = new HashMap<String , ColorsObjectCategory>();
+	public Map<Integer, ColorsObjectCategory> colorsMeta = new HashMap<Integer, ColorsObjectCategory>();
 	
 	@Override
 	public String getName() 
@@ -40,42 +40,33 @@ public class ColorsCategory
 			return;
 		}
 		
+		int metadata = 0;
+		
 		LogHelper.info("Loading children");
 		LogHelper.startIndent();
-		for(String category : config.getSubCategories(ColorsObjectCategory.NAME_PREFIX))
+		for(String category : config.getSubCategories())
 		{
 			LogHelper.info("Child " + category);
 			LogHelper.startIndent();
 			
-			int id = 0;
-			try
+			if(colors.containsKey(category))
 			{
-				id = Integer.parseInt(category.substring(ColorsObjectCategory.NAME_PREFIX.length()));
-			}
-			catch(NumberFormatException e)
-			{
-				LogHelper.error("Configuration for color \"" + category + "\" : invalid ID (integer), skipping");
-				continue;
-			}
-			LogHelper.info("ID : " + id);
-			
-			if(colors.containsKey(id))
-			{
-				LogHelper.warn("Configuration for color " + id + " : duplicate ID, skipping");
+				LogHelper.warn("Configuration for color " + category + " : already existing, skipping");
 				continue;
 			}
 			
-			ColorsObjectCategory color = new ColorsObjectCategory(id);
+			ColorsObjectCategory color = new ColorsObjectCategory(category, metadata);
 			config.loadCategory(color);
-
+			
 			if(!color.isValid())
 			{
-				LogHelper.warn("Configuration for color " + id + " : invalid related config, skipping");
+				LogHelper.warn("Configuration for color " + color.getId() + " : invalid related config, skipping");
 				continue;
 			}
 			LogHelper.stopIndent();
 			
-			addColor(id, color);
+			metadata++;
+			addColor(color);
 		}
 		LogHelper.stopIndent();
 	}
@@ -83,26 +74,26 @@ public class ColorsCategory
 	{
 		for(EnumDyeColor dye : EnumDyeColor.values())
 		{
-			ColorsObjectCategory color = new ColorsObjectCategory(dye.getMetadata(), new ItemStack(Items.DYE, 1, dye.getDyeDamage()));
+			ColorsObjectCategory color = new ColorsObjectCategory(
+				dye.getUnlocalizedName(), 
+				dye.getMetadata(), 
+				new ItemStack(Items.DYE, 1, dye.getDyeDamage())
+			);
 			config.loadCategory(color);
 			
 			if(!color.isValid())
 			{
-				LogHelper.warn("Configuration for color " + dye.getMetadata() + " : invalid related config, skipping");
+				LogHelper.warn("Configuration for color " + dye.getUnlocalizedName() + " : invalid related config, skipping");
 				continue;
 			}
-			
-			addColor(dye.getMetadata(), color);
+
+			addColor(color);
 		}
 	}
-
-	private void addColor(int id, ColorsObjectCategory color)
+	
+	protected void addColor(ColorsObjectCategory color)
 	{
-		if(id < this.colors_min)
-			this.colors_min = id;
-		if(id > this.colors_max)
-			this.colors_max = id;
-		
-		colors.put(id, color);
+		colors.put(color.getId(), color);
+		colorsMeta.put(color.getMetadata(), color);
 	}
 }

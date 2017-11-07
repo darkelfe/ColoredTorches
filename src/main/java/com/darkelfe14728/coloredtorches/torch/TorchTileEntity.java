@@ -24,28 +24,28 @@ import net.minecraft.world.World;
 public class TorchTileEntity 
 	extends TileEntity 
 {
-	private static final String KEY_COLOR_ID = "color_id";
+	private static final String KEY_COLOR = "color";
 	
-	private int colorID;
+	private String color;
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		this.colorID = compound.getInteger(KEY_COLOR_ID);
-		LogHelper.info("Read TE (" + this.getPos().toString() + ") on " + LogHelper.side() + " side : colorID = " + this.colorID);
+		this.color = compound.getString(KEY_COLOR);
 	}
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		
-		LogHelper.info("Write TE (" + this.getPos().toString() + ") on " + LogHelper.side() + " side : colorID = " + this.colorID);
-		compound.setInteger(KEY_COLOR_ID, this.colorID);
+		compound.setString(KEY_COLOR, this.color);
 		
 		return compound;
 	}
 	
+	/*
+	 * Correct synchronization between client and server tile entity.
+	 */
 	@Override
 	@Nullable
     public SPacketUpdateTileEntity getUpdatePacket()
@@ -58,33 +58,20 @@ public class TorchTileEntity
         return this.writeToNBT(new NBTTagCompound());
     }
 	
-	@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
+	public String getColorID()
 	{
-		LogHelper.info("Check TE in " + pos);
-		LogHelper.startIndent();
-		
-		LogHelper.info("Old state : " + oldState);
-		LogHelper.info("New state : " + newState);
-		
-		LogHelper.stopIndent();
-		return super.shouldRefresh(world, pos, oldState, newState);
-	}
-	
-	public int getColorID()
-	{
-		return this.colorID;
+		return this.color;
 	}
 	public ColorsObjectCategory getColor()
 	{
 		return ModConfig.instance.colors.colors.get(getColorID());
 	}
-	public void setColorID(int id)
+	public void setColorID(String id)
 	{
-		this.colorID = id;
+		this.color = id;
 	}
 	public void setColor(ColorsObjectCategory color)
 	{
-		setColorID(color.id);
+		setColorID(color.getId());
 	}
 }

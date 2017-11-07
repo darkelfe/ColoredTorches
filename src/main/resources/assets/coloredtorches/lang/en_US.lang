@@ -1,7 +1,7 @@
 interface.color=Color : %s
 
-colors.color.0=Black
-colors.color.1=Red
+colors.color.black=Black
+colors.color.red=Red
 colors.color.2=Green
 colors.color.3=Brown
 colors.color.4=Blue
@@ -17,5 +17,5 @@ colors.color.13=Magenta
 colors.color.14=Orange
 colors.color.15=White
 
-tile.torch.0.name=Black torch
-tile.torch.1.name=Red torch
+tile.torch.black.name=Black torch
+tile.torch.red.name=Red torch
