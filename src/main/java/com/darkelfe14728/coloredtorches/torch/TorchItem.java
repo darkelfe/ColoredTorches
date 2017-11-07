@@ -2,9 +2,11 @@ package com.darkelfe14728.coloredtorches.torch;
 
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import com.darkelfe14728.coloredtorches.config.ColorsObjectCategory;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 
 import net.minecraft.block.Block;
@@ -53,9 +55,16 @@ public class TorchItem
 	@SideOnly(Side.CLIENT)
 	public void registerModels()
 	{
-		ModelResourceLocation loc = new ModelResourceLocation(this.getRegistryName(), "inventory");
-		for(Integer metadata : ModConfig.instance.colors.colorsMeta.keySet())
-			ModelLoader.setCustomModelResourceLocation(this, metadata, loc);
+		for(Map.Entry<String, ColorsObjectCategory> color : ModConfig.instance.colors.colors.entrySet())
+		{
+			ModelLoader.setCustomModelResourceLocation(
+				this, color.getValue().getMetadata(), 
+				new ModelResourceLocation(
+					this.getRegistryName() + "_" + color.getKey(), 
+					"inventory"
+				)
+			);
+		}
 	}
 	
 	@Override

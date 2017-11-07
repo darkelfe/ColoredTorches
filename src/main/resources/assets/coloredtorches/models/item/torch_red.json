@@ -1,0 +1,6 @@
+{
+    "parent": "coloredtorches:item/torch",
+    "textures": {
+    	"torch": "coloredtorches:blocks/torch_red"
+    }
+}

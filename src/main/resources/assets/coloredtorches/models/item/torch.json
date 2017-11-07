@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-    	"layer0": "coloredtorches:blocks/torch_red"
+    	"layer0": "#torch"
     }
 }
