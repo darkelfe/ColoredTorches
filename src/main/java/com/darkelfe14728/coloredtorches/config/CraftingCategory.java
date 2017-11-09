@@ -13,7 +13,7 @@ public class CraftingCategory
 {
 	public WashingCategory washing = new WashingCategory();
 	
-	public Range craftBy = new Range(8);
+	public Range craftRange = new Range(8);
 	
 	@Override
 	public String getName()
@@ -32,8 +32,8 @@ public class CraftingCategory
 		config.loadCategory(washing);
 		LogHelper.stopIndent();
 		
-		LogHelper.info("craftBy");
-		this.craftBy = config.getRange("craftBy", config.currentCategory, this.craftBy, 1, 64, "Global number of colored torches craft with on 'crafting item'");
+		LogHelper.info("craftRange");
+		this.craftRange = config.getRange("craftRange", config.currentCategory, this.craftRange, 1, 64, "Number of colored torches craft by on 'crafting item'");
 		LogHelper.stopIndent();
 	}
 	

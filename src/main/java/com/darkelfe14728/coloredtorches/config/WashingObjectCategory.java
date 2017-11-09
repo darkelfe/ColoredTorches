@@ -6,6 +6,8 @@ package com.darkelfe14728.coloredtorches.config;
 import com.darkelfe14728.coloredtorches.log.LogHelper;
 import com.darkelfe14728.coloredtorches.utils.Range;
 
+import net.minecraft.item.ItemStack;
+
 /**
  * Category : /crafting/washing/<object>
  * 
@@ -16,15 +18,17 @@ public class WashingObjectCategory
 {
 	private final String name;
 	
-	public boolean canWash = true;
-	public boolean consumeWater = true;
-	public boolean consumeObject = false;
-	public Range washBy = null;
+	public ItemStack washingItem = null;
+	public boolean consumeContent = false;
+	public boolean consumeContainer = false;
+	public Range washRange = null;
 	
-	public WashingObjectCategory(String name, Range washBy) 
+	public WashingObjectCategory(String name, ItemStack washingItem, Range washRange) 
 	{
 		this.name = name;
-		this.washBy = washBy;
+		
+		this.washingItem = washingItem;
+		this.washRange = washRange;
 	}
 
 	@Override
@@ -36,20 +40,15 @@ public class WashingObjectCategory
 	@Override
 	public void load(ImprovedConfiguration config)
 	{
-		LogHelper.info("Category \"" + getName() + "\"");
-		LogHelper.startIndent();
+		LogHelper.info("washingItem");
+		this.washingItem = config.getItem("washingItem", config.currentCategory, this.washingItem, "Item used to wash colored torches");
 		
-		LogHelper.info("canWash");
-		this.canWash = config.getBoolean("canWash", config.currentCategory, this.canWash, "Can '" + getName() + "' be used to clean colored torches ?");
-		
-		LogHelper.info("consumeWater");
-		this.consumeWater  = config.getBoolean("consumeWater" , config.currentCategory, this.consumeWater , "Is water consumed in cleaning operation ?");
-		LogHelper.info("consumeObject");
-		this.consumeObject = config.getBoolean("consumeObject", config.currentCategory, this.consumeObject, "Is object (" + getName() + ") consumed in cleaning operation ?");
+		LogHelper.info("consumeContent");
+		this.consumeContent  = config.getBoolean("consumeContent" , config.currentCategory, this.consumeContent , "Is object content consumed in cleaning operation ?");
+		LogHelper.info("consumeContainer");
+		this.consumeContainer = config.getBoolean("consumeContainer", config.currentCategory, this.consumeContainer, "Is object container consumed in cleaning operation ?");
 
-		LogHelper.info("washBy");
-		this.washBy = config.getRange("washBy", config.currentCategory, this.washBy, 1, 64, "How many colored torches can by washed at the same time ?");
-
-		LogHelper.stopIndent();
+		LogHelper.info("washRange");
+		this.washRange = config.getRange("washBy", config.currentCategory, this.washRange, 1, 8*64, "How many colored torches can by washed at the same time ?");
 	}
 }

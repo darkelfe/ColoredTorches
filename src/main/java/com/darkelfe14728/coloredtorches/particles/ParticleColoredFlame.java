@@ -6,7 +6,6 @@ import java.util.Map;
 import com.darkelfe14728.coloredtorches.config.ColorsObjectCategory;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFlame;

@@ -2,6 +2,8 @@ package com.darkelfe14728.coloredtorches.torch;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import com.darkelfe14728.coloredtorches.config.ColorsObjectCategory;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 import com.darkelfe14728.coloredtorches.log.LogHelper;
@@ -13,8 +15,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -34,6 +36,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * 
  * Except about color, it IS a (vanilla) torch. So extends it.
  * 
+ * <p><b>NOTE :</b> BlockFlowerPot is a good example : data stored in tile entity and used for rendering and item, just like us.</p>
+ * 
  * @author Julien Rosset
  */
 public class TorchBlock
@@ -42,7 +46,8 @@ public class TorchBlock
 	/**
 	 * BlockState property about color.
 	 * 
-	 * <b>WARNING :</b> this is NOT only vanilla colors (like dye).
+	 * <b>WARNING :</b> this is NOT only vanilla colors like dye : all colors are declared in configuration 
+	 * and texture pack provide rendering.
 	 */
 	public static final PropertyColor COLOR = new PropertyColor("color");
 	
@@ -181,19 +186,37 @@ public class TorchBlock
 		return state.withProperty(COLOR, colorProperty);
 	}
 	
-	@Override
-	public int damageDropped(IBlockState state)
-	{
-		return ModConfig.instance.colors.colors.get(state.getValue(COLOR)).getMetadata();
-	}
-	
+	/**
+	 * Manage drop's item metadata when block is break.
+	 * 
+	 * In normal conditions, function getDrops is launch <i>after</i> block is really destroyed, even considering is parameters.
+	 * So the tile entity is also missing.
+	 * 
+	 * But we want drop an item with metadata based on this tile entity. So we used removedByPlayer and harvestBlock to
+	 * stop normal process when block is destroyed (so it and its tile entity are still here in getDrops) and manually 
+	 * manage block destruction.
+	 */
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
 	{
-		Minecraft.getMinecraft().setIngameNotInFocus();
 		int metadata = this.getColor(world, pos).getMetadata();		
 		drops.add(new ItemStack(this, 1, metadata));
 	}
+	@Override
+	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest)
+	{
+		// If it will harvest, delay deletion of the block until after getDrops
+		if(willHarvest)
+			return true;
+		
+        return super.removedByPlayer(state, world, pos, player, willHarvest);
+	}
+	@Override
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack tool)
+    {
+        super.harvestBlock(world, player, pos, state, te, tool);
+        world.setBlockToAir(pos);
+    }
 	
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state,	EntityLivingBase placer, ItemStack stack)
