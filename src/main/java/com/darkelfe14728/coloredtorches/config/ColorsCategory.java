@@ -74,9 +74,12 @@ public class ColorsCategory
 	{
 		for(EnumDyeColor dye : EnumDyeColor.values())
 		{
+			LogHelper.info("Color : " + dye.getDyeColorName());
+			LogHelper.startIndent();
+			
 			ColorsObjectCategory color = new ColorsObjectCategory(
-				dye.getUnlocalizedName(), 
-				dye.getMetadata(), 
+				dye.getUnlocalizedName().toLowerCase(),
+				dye.getMetadata(),
 				new ItemStack(Items.DYE, 1, dye.getDyeDamage())
 			);
 			config.loadCategory(color);
@@ -88,6 +91,7 @@ public class ColorsCategory
 			}
 
 			addColor(color);
+			LogHelper.stopIndent();
 		}
 	}
 	

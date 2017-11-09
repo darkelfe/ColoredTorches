@@ -15,7 +15,8 @@ public class ColorsObjectCategory
 {	
 	protected String id = null;
 	protected int metadata = -1;
-	protected Range craftBy = null;
+	
+	protected Range craftRange = null;
 	protected ItemStack craftingItem = null;
 
 	public ColorsObjectCategory(String id, int metadata)
@@ -45,7 +46,7 @@ public class ColorsObjectCategory
 	}
 	public Range getCraftBy()
 	{
-		return this.craftBy;
+		return this.craftRange;
 	}
 	public ItemStack getCraftingItem()
 	{
@@ -55,12 +56,12 @@ public class ColorsObjectCategory
 	@Override
 	public void load(ImprovedConfiguration config)
 	{
-		LogHelper.info("craftBy");
-		if(config.hasKey(config.currentCategory, "craftBy"))
-			this.craftBy = config.getRange("craftBy", config.currentCategory, ModConfig.instance.crafting.craftBy, 1, 64, "Number of colored torches craft with on 'crafting item'");
+		LogHelper.info("craftRange");
+		if(config.hasKey(config.currentCategory, "craftRange"))
+			this.craftRange = config.getRange("craftRange", config.currentCategory, ModConfig.instance.crafting.craftRange, 1, 64, "Number of colored torches craft with on 'crafting item'");
 		else
 		{
-			this.craftBy = ModConfig.instance.crafting.craftBy;
+			this.craftRange = ModConfig.instance.crafting.craftRange;
 		}
 		
 		LogHelper.info("craftingItem");
