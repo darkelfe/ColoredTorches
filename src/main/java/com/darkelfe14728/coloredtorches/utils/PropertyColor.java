@@ -22,7 +22,7 @@ public class PropertyColor
 	@Override
 	public Collection<String> getAllowedValues()
 	{
-		return ModConfig.instance.colors.colors.keySet();
+		return ModConfig.getInstance().getGeneral().getColors().keySet();
 	}
 
 	@Override

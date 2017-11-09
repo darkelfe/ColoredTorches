@@ -3,8 +3,8 @@ package com.darkelfe14728.coloredtorches.particles;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.darkelfe14728.coloredtorches.config.ColorsObjectCategory;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
+import com.google.common.collect.BiMap;
 
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
@@ -51,10 +51,10 @@ public class ParticleColoredFlame
 
 	public static void registerSprite(TextureMap map)
 	{
-		for(Map.Entry<String, ColorsObjectCategory> color : ModConfig.instance.colors.colors.entrySet())
+		for(BiMap.Entry<String, Integer> color : ModConfig.getInstance().getGeneral().getColors().entrySet())
 		{
 			textures.put(
-				color.getValue().getMetadata(), 
+				color.getValue(), 
 				map.registerSprite(
 					new ResourceLocation("coloredtorches:particle/torch_flame_" + color.getKey())
 				)

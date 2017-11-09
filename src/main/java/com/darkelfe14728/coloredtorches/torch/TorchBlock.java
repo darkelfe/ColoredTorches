@@ -4,7 +4,6 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.darkelfe14728.coloredtorches.config.ColorsObjectCategory;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 import com.darkelfe14728.coloredtorches.log.LogHelper;
 import com.darkelfe14728.coloredtorches.registers.Particles;
@@ -66,7 +65,7 @@ public class TorchBlock
 		// State
 		setDefaultState(this.blockState.getBaseState()
 				.withProperty(FACING, EnumFacing.UP)
-				.withProperty(COLOR, ModConfig.instance.colors.colors.keySet().iterator().next())	// First color
+				.withProperty(COLOR, ModConfig.getInstance().getGeneral().getColors().keySet().iterator().next())	// First color
 		);
 	}
 	
@@ -100,15 +99,6 @@ public class TorchBlock
 		return null;
 	}
 	
-	private ColorsObjectCategory getColor(World world, BlockPos pos)
-	{
-		return getTileEntity(world, pos).getColor();
-	}
-	private ColorsObjectCategory getColor(IBlockAccess world, BlockPos pos)
-	{
-		return getTileEntity(world, pos).getColor();
-	}
-	
 	@Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
@@ -118,7 +108,7 @@ public class TorchBlock
         double yCoord = (double)pos.getY() + 0.7D;
         double zCoord = (double)pos.getZ() + 0.5D;
 					
-		int metadata = this.getColor(world, pos).getMetadata();
+		int metadata = this.getTileEntity(world, pos).getColorMetadata();
         
         int[] args = {metadata};
 
@@ -179,7 +169,7 @@ public class TorchBlock
 		if(te instanceof TorchTileEntity)
 		{
 			TorchTileEntity tile = (TorchTileEntity)te;			
-			colorProperty = tile.getColorID();
+			colorProperty = tile.getColorName();
 		}
 		
 		LogHelper.stopIndent();
@@ -199,7 +189,7 @@ public class TorchBlock
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
 	{
-		int metadata = this.getColor(world, pos).getMetadata();		
+		int metadata = this.getTileEntity(world, pos).getColorMetadata();		
 		drops.add(new ItemStack(this, 1, metadata));
 	}
 	@Override
@@ -223,6 +213,6 @@ public class TorchBlock
 	{
 		TileEntity te = worldIn.getTileEntity(pos);
 		if(te instanceof TorchTileEntity)
-			((TorchTileEntity)te).setColor(ModConfig.instance.colors.colorsMeta.get(stack.getItemDamage()));
+			((TorchTileEntity)te).setColor(stack.getMetadata());
 	}
 }
