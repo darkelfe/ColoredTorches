@@ -5,7 +5,6 @@ package com.darkelfe14728.coloredtorches.torch;
 
 import javax.annotation.Nullable;
 
-import com.darkelfe14728.coloredtorches.config.ColorsObjectCategory;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -54,20 +53,20 @@ public class TorchTileEntity
         return this.writeToNBT(new NBTTagCompound());
     }
 	
-	public String getColorID()
+	public String getColorName()
 	{
 		return this.color;
 	}
-	public ColorsObjectCategory getColor()
+	public Integer getColorMetadata()
 	{
-		return ModConfig.instance.colors.colors.get(getColorID());
+		return ModConfig.getInstance().getGeneral().getColors().get(this.color);
 	}
-	public void setColorID(String id)
+	public void setColor(String colorName)
 	{
-		this.color = id;
+		this.color = colorName;
 	}
-	public void setColor(ColorsObjectCategory color)
+	public void setColor(Integer colorMetadata)
 	{
-		setColorID(color.getId());
+		this.setColor(ModConfig.getInstance().getGeneral().getColors().inverse().get(colorMetadata));
 	}
 }

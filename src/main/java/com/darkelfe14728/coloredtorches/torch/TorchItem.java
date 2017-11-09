@@ -3,10 +3,10 @@ package com.darkelfe14728.coloredtorches.torch;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
-import com.darkelfe14728.coloredtorches.config.ColorsObjectCategory;
 import com.darkelfe14728.coloredtorches.config.ModConfig;
 
 import net.minecraft.block.Block;
@@ -49,16 +49,16 @@ public class TorchItem
         if(!this.isInCreativeTab(tab))
         	return;
         
-        for(Map.Entry<String, ColorsObjectCategory> color : ModConfig.instance.colors.colors.entrySet())
-    		items.add(new ItemStack(this, 1, color.getValue().getMetadata()));
+        for(Entry<String, Integer> color : ModConfig.getInstance().getGeneral().getColors().entrySet())
+    		items.add(new ItemStack(this, 1, color.getValue()));
     }
 	@SideOnly(Side.CLIENT)
 	public void registerModels()
 	{
-		for(Map.Entry<String, ColorsObjectCategory> color : ModConfig.instance.colors.colors.entrySet())
+		for(Map.Entry<String, Integer> color : ModConfig.getInstance().getGeneral().getColors().entrySet())
 		{
 			ModelLoader.setCustomModelResourceLocation(
-				this, color.getValue().getMetadata(), 
+				this, color.getValue(), 
 				new ModelResourceLocation(
 					this.getRegistryName() + "_" + color.getKey(), 
 					"inventory"
@@ -76,7 +76,7 @@ public class TorchItem
 	@Override
 	public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName() + "." + ModConfig.instance.colors.colorsMeta.get(stack.getMetadata()).getId();
+        return super.getUnlocalizedName() + "." + ModConfig.getInstance().getGeneral().getColors().inverse().get(stack.getMetadata());
     }
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -84,7 +84,7 @@ public class TorchItem
     {
         super.addInformation(stack, world, tooltip, flag);
         
-        String color_str = I18n.format("colors.color." + ModConfig.instance.colors.colorsMeta.get(stack.getMetadata()).getId());
+        String color_str = I18n.format("colors.color." + ModConfig.getInstance().getGeneral().getColors().inverse().get(stack.getMetadata()));
         tooltip.add(I18n.format("interface.color", color_str));
     }
 }

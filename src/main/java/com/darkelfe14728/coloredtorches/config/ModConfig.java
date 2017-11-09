@@ -11,7 +11,10 @@ import com.darkelfe14728.coloredtorches.log.LogHelper;
  */
 public class ModConfig
 {	
-	public static ModConfig instance = null;
+	private static ModConfig instance = null;
+	
+	protected ImprovedConfiguration config = null;
+	protected GeneralCategory general = new GeneralCategory();
 	
 	public static boolean isLoaded()
 	{
@@ -24,30 +27,33 @@ public class ModConfig
 		
 		ModConfig.instance.loadConfig(file);
 	}
-
 	
-	private ImprovedConfiguration config = null;
-	
-	public CraftingCategory crafting = new CraftingCategory();
-	public   ColorsCategory   colors = new   ColorsCategory();
+	public static ModConfig getInstance()
+	{
+		return instance;
+	}
 	
 	private ModConfig()
 	{}
 	private void loadConfig(File file)
 	{
 		LogHelper.startBlock("Configuration");
+		
 		LogHelper.info("File : " + file.getAbsolutePath());
 		config = new ImprovedConfiguration(file);
-		LogHelper.info("Loading defaults");
 		config.load();
 		
 		LogHelper.info("Loading categories");
 		LogHelper.startIndent();
-		config.loadCategory(crafting);
-		config.loadCategory(colors);
+		config.loadCategory(general);
 		LogHelper.stopIndent();
-		LogHelper.stopBlock();
 		
 		config.save();
+		LogHelper.stopBlock();
+	}
+
+	public GeneralCategory getGeneral()
+	{
+		return this.general;
 	}
 }
