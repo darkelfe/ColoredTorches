@@ -37,7 +37,7 @@ public class ColoredTorches
 	/**
 	 * Mod version.
 	 */
-	public static final String MOD_VERSION = "0.9";
+	public static final String MOD_VERSION = "1.0.0";
 	
 	@Mod.Instance(MOD_ID)
 	public static ColoredTorches instance;
