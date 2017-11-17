@@ -103,12 +103,25 @@ public class TorchBlock
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
     {
+		TorchTileEntity te = this.getTileEntity(world, pos);
+		if(null == te)
+			return;
+		
         EnumFacing face = (EnumFacing)state.getValue(FACING);
         double xCoord = (double)pos.getX() + 0.5D;
         double yCoord = (double)pos.getY() + 0.7D;
         double zCoord = (double)pos.getZ() + 0.5D;
-					
-		int metadata = this.getTileEntity(world, pos).getColorMetadata();
+		
+        // Re-test 
+        int metadata = 0;
+        try
+        {
+        	metadata = te.getColorMetadata();
+        }
+        catch(NullPointerException $e)
+        {
+        	return;
+        }
         
         int[] args = {metadata};
 
@@ -163,7 +176,7 @@ public class TorchBlock
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)	// getExtendedState ?
 	{
-		String colorProperty = null;
+		String colorProperty = state.getValue(COLOR);
 		
 		TileEntity te = world instanceof ChunkCache ? ((ChunkCache)world).getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK) : world.getTileEntity(pos);
 		if(te instanceof TorchTileEntity)
