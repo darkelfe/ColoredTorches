@@ -1,0 +1,14 @@
+{
+	"type": "coloredtorches:torch",
+	"group": "coloredtorches",
+	"torchQuantity": 2,
+	"result": {
+		"color": "black"
+	},
+	"colorants": [
+		{
+			"type": "coloredtorches:dye",
+			"color": "red"
+		}
+	]
+}

@@ -40,7 +40,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author Julien Rosset
  */
 public class TorchBlock
-	extends BlockTorch 
+	extends BlockTorch
 {
 	/**
 	 * BlockState property about color.

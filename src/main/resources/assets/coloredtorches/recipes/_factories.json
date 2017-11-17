@@ -1,0 +1,15 @@
+{
+	"ingredients": {
+		"wildcard": "com.darkelfe14728.coloredtorches.recipes.WildcardItemIngredient",
+		"dye": "com.darkelfe14728.coloredtorches.recipes.DyeIngredient",
+		"water_bottle": "com.darkelfe14728.coloredtorches.recipes.WaterBottleIngredient",
+		
+		"torch": "com.darkelfe14728.coloredtorches.recipes.TorchIngredient"
+	},
+	"recipes": {
+		"torch": "com.darkelfe14728.coloredtorches.recipes.TorchRecipe"
+	},
+	"conditions": {
+		"can_wash": "com.darkelfe14728.coloredtorches.recipes.WashCondition"
+	}
+}
