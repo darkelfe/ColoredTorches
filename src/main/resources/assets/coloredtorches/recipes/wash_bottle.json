@@ -1,0 +1,22 @@
+{
+	"conditions": [
+		{
+			"type": "coloredtorches:can_wash"
+		}
+	],
+	"type": "minecraft:crafting_shapeless",
+	"group": "coloredtorches",
+	"result": {
+		"type": "minecraft:item",
+		"item": "minecraft:torch"
+	},
+	"ingredients": [
+		{
+			"type": "coloredtorches:water_bottle"
+		},
+		{
+			"type": "coloredtorches:wildcard",
+			"item": "coloredtorches:torch"
+		}
+	]
+}

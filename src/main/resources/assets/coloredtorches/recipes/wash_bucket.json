@@ -1,0 +1,52 @@
+{
+	"conditions": [
+		{
+			"type": "coloredtorches:can_wash"
+		}
+	],
+	"type": "minecraft:crafting_shapeless",
+	"group": "coloredtorches",
+	"result": {
+		"type": "minecraft:item",
+		"item": "minecraft:torch",
+		"count": 8
+	},
+	"ingredients": [
+		{
+			"type": "minecraft:item",
+			"item": "minecraft:water_bucket"
+		},
+		{
+			"type": "coloredtorches:wildcard",
+			"item": "coloredtorches:torch"
+		},
+		{
+			"type": "coloredtorches:wildcard",
+			"item": "coloredtorches:torch"
+		},
+		{
+			"type": "coloredtorches:wildcard",
+			"item": "coloredtorches:torch"
+		},
+		{
+			"type": "coloredtorches:wildcard",
+			"item": "coloredtorches:torch"
+		},
+		{
+			"type": "coloredtorches:wildcard",
+			"item": "coloredtorches:torch"
+		},
+		{
+			"type": "coloredtorches:wildcard",
+			"item": "coloredtorches:torch"
+		},
+		{
+			"type": "coloredtorches:wildcard",
+			"item": "coloredtorches:torch"
+		},
+		{
+			"type": "coloredtorches:wildcard",
+			"item": "coloredtorches:torch"
+		}
+	]
+}
