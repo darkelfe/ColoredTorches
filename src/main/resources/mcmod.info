@@ -1,16 +1,12 @@
 [
 	{
 		"modid": "coloredtorches",
-		"name": "Colored Torches",
+		"name": "ColoredTorches",
+		"descrition": "Colored torches for Minecraft",
 		"version": "${version}",
 		"mcversion": "${mcversion}",
-		"logoFile": "",
-		"url": "",
-		"updateUrl": "",
-		"authorList": ["Julien Rosset"],
-		"credits": "",
-		"parent": "",
-		"screenshots": [],
-		"dependencies": []
+		"logoFile": "assets/coloredtorches/logo.png",
+		"url": "https://minecraft.curseforge.com/projects/coloredtorches",
+		"authorList": ["Julien Rosset"]
 	}
 ]
