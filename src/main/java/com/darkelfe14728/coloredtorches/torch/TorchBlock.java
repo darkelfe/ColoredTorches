@@ -10,6 +10,7 @@ import com.darkelfe14728.coloredtorches.registers.Particles;
 import com.darkelfe14728.coloredtorches.utils.PropertyColor;
 
 import net.minecraft.block.BlockTorch;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -41,6 +42,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class TorchBlock
 	extends BlockTorch
+	implements ITileEntityProvider
 {
 	/**
 	 * BlockState property about color.
@@ -53,6 +55,7 @@ public class TorchBlock
 	public TorchBlock()
 	{		
 		super();
+		this.hasTileEntity = true;
 		setHardness(0.0F);
 		setLightLevel(0.9375F);
 		setSoundType(SoundType.WOOD);
@@ -81,7 +84,7 @@ public class TorchBlock
 		return true;
 	}
 	@Override
-	public TorchTileEntity createTileEntity(World world, IBlockState state)
+	public TorchTileEntity createNewTileEntity(World world, int meta)
 	{
 		return new TorchTileEntity();
 	}
@@ -220,6 +223,12 @@ public class TorchBlock
         super.harvestBlock(world, player, pos, state, te, tool);
         world.setBlockToAir(pos);
     }
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
+	{
+		super.breakBlock(world, pos, state);
+		world.removeTileEntity(pos);
+	}
 	
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state,	EntityLivingBase placer, ItemStack stack)
@@ -228,4 +237,10 @@ public class TorchBlock
 		if(te instanceof TorchTileEntity)
 			((TorchTileEntity)te).setColor(stack.getMetadata());
 	}
+	@Override
+	public boolean eventReceived(IBlockState state, World world, BlockPos pos, int id, int param)
+    {
+        TileEntity tileentity = world.getTileEntity(pos);
+        return tileentity == null ? false : tileentity.receiveClientEvent(id, param);
+    }
 }
