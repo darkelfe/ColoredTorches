@@ -13,7 +13,7 @@ plugins {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.0.1"
+version = "1.0.2"
 group = "com.darkelfe14728.coloredtorches"
 archivesBaseName = "colored-torches"
 
@@ -48,13 +48,15 @@ processResources {
 
 jar {
 	exclude '**/*.xcf'
-	destinationDir = file(rootProject.getRootDir().getPath() + '/output')
 }
 task sourcesJar(type: Jar, dependsOn: 'sourceMainJava') {
 	from 'build/sources/main'
 	from 'build/resources/main'
 	classifier 'sources'
-	destinationDir = file(rootProject.getRootDir().getPath() + '/output')
+}
+
+artifacts {
+	archives sourceJar
 }
 
 curseforge {

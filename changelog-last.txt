@@ -1,1 +1,1 @@
-Fix random crash
+Fix color update of torch on servers
